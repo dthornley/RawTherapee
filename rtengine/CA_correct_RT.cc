@@ -887,8 +887,16 @@ void RawImageSource::CA_correct_RT(const double cared, const double cablue, cons
                         constexpr float bslim = 3.99; //max allowed CA shift
                         lblockshifts[0][0] = LIM(lblockshifts[0][0], -bslim, bslim);
                         lblockshifts[0][1] = LIM(lblockshifts[0][1], -bslim, bslim);
+                        if(fabs(lblockshifts[0][0]) + fabs(lblockshifts[0][1]) < 0.2f) {
+                            // Don't shift channel when sum of shifts is too low
+                            lblockshifts[0][0] = lblockshifts[0][1] = 0.f;
+                        }
                         lblockshifts[1][0] = LIM(lblockshifts[1][0], -bslim, bslim);
                         lblockshifts[1][1] = LIM(lblockshifts[1][1], -bslim, bslim);
+                        if(fabs(lblockshifts[1][0]) + fabs(lblockshifts[1][1]) < 0.2f) {
+                            // Don't shift channel when sum of shifts is too low
+                            lblockshifts[1][0] = lblockshifts[1][1] = 0.f;
+                        }
                     }//end of setting CA shift parameters
 
 
